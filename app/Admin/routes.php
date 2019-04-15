@@ -12,4 +12,7 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
 
+    $router->resource('goodtype', GoodTypeController::class);//商品分类管理
+    $router->resource('good', GoodController::class);//商品管理
+    $router->resource('config', ConfigController::class);//商品管理
 });

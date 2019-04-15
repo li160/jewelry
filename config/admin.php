@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Laravel-admin',
+    'name' => '香港爱登珠宝后台',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>Laravel</b> admin',
+    'logo' => '<b>香港爱登珠宝</b> 后台',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     | '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo-mini' => '<b>La</b>',
+    'logo-mini' => '<b>爱登</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -273,7 +273,7 @@ return [
     | This value is used to set the background image of login page.
     |
     */
-    'login_background_image' => '',
+    'login_background_image' => '/images/background-blur-clean.jpg',
 
     /*
     |--------------------------------------------------------------------------
@@ -294,7 +294,7 @@ return [
     | Whether to display the environment at the footer of each page
     |
     */
-    'show_environment' => true,
+    'show_environment' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -312,7 +312,7 @@ return [
     |
     | Whether enable default breadcrumb for every page content.
     */
-    'enable_default_breadcrumb' => true,
+    'enable_default_breadcrumb' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -334,6 +334,15 @@ return [
     |
     */
     'extensions' => [
+        'ueditor' => [
 
+            // 如果要关掉这个扩展，设置为false
+            'enable' => true,
+
+            // 编辑器的前端配置 参考：http://fex.baidu.com/ueditor/#start-config
+            'config' => [
+                'initialFrameHeight' => 400, // 例如初始化高度
+            ]
+        ]
     ],
 ];
