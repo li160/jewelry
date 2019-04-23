@@ -2,8 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Model\Good;
-use App\Model\GoodType;
+use App\Model\Image;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -11,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class GoodController extends Controller
+class ImageController extends Controller
 {
     use HasResourceActions;
 
@@ -24,7 +23,7 @@ class GoodController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->header('商品管理')
+            ->header('图片管理')
             ->description('列表')
             ->body($this->grid());
     }
@@ -39,7 +38,7 @@ class GoodController extends Controller
     public function show($id, Content $content)
     {
         return $content
-            ->header('商品管理')
+            ->header('图片管理')
             ->description('详情')
             ->body($this->detail($id));
     }
@@ -54,7 +53,7 @@ class GoodController extends Controller
     public function edit($id, Content $content)
     {
         return $content
-            ->header('商品管理')
+            ->header('图片管理')
             ->description('编辑')
             ->body($this->form()->edit($id));
     }
@@ -68,7 +67,7 @@ class GoodController extends Controller
     public function create(Content $content)
     {
         return $content
-            ->header('商品管理')
+            ->header('图片管理')
             ->description('创建')
             ->body($this->form());
     }
@@ -80,16 +79,12 @@ class GoodController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new Good);
+        $grid = new Grid(new Image);
 
         $grid->id('Id');
-        $grid->goodtype()->name('分类');
-        $grid->name('名称');
-        $grid->number('款号');
-        $grid->img('图片')->image('', 100, 100);
-        $grid->images('多图')->image('', 100, 100);
-        $grid->state('状态')->switch(Good::STATE_SWITCH);
-        $grid->created_at('创建时间');
+        $grid->url('图片')->image('',100,100);
+        $grid->remark('备注');
+        $grid->updated_at('更新时间');
 
         return $grid;
     }
@@ -102,19 +97,12 @@ class GoodController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(Good::findOrFail($id));
+        $show = new Show(Image::findOrFail($id));
 
         $show->id('Id');
-        $show->goodtype()->name('分类');
-        $show->name('名称');
-        $show->number('款号');
-        $show->img('图片')->image('', 100, 100);
-        $show->images('多图')->image('', 100, 100);
-        $show->details('详情')->unescape();
-        $show->state('状态')->as(function ($val){
-            return Good::STATE_MAP[$val];
-        });
-        $show->created_at('创建时间');
+        $show->url('图片')->image('',100,100);
+        $show->remark('备注');
+        $show->updated_at('更新时间');
 
         return $show;
     }
@@ -126,15 +114,10 @@ class GoodController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new Good);
-        $form->select('type','分类')->options(GoodType::all()->pluck('name','id'));
-        $form->text('name', '名称');
-        $form->text('number', '款号');
-        $form->image('img', '图片')->uniqueName()->move('home')->removable();
-        $form->multipleImage('images', '多图')->uniqueName()->move('home')->removable();
-        $form->switch('state', '状态')->states(Good::STATE_SWITCH)->default(Good::STATE_ON);
-        $form->textarea('details', '简介');
-
+        $form = new Form(new Image);
+        $form->text('code', '编码');
+        $form->image('url', '图片')->uniqueName()->move('page')->removable();
+        $form->text('remark', '备注');
         return $form;
     }
 }

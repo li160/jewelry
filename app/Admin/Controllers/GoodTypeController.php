@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Model\GoodType;
+use App\Model\HomeType;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -82,7 +83,9 @@ class GoodTypeController extends Controller
         $grid = new Grid(new GoodType);
 
         $grid->id('Id');
+        $grid->uptype()->name('上级分类');
         $grid->name('名称');
+        $grid->img('图片')->image('',100,100);
         $grid->created_at('创建时间');
 
         return $grid;
@@ -99,7 +102,9 @@ class GoodTypeController extends Controller
         $show = new Show(GoodType::findOrFail($id));
 
         $show->id('Id');
+        $show->uptype()->name('上级分类');
         $show->name('名称');
+        $show->img('图片')->image('',100,100);
         $show->created_at('创建时间');
 
         return $show;
@@ -113,9 +118,9 @@ class GoodTypeController extends Controller
     protected function form()
     {
         $form = new Form(new GoodType);
-
+        $form->select('up','分类')->options(HomeType::orderBy('weight','desc')->select()->pluck('name','id'));
         $form->text('name', '名称')->required();
-
+        $form->image('img', '图片')->uniqueName()->move('good/type')->removable();
         return $form;
     }
 }
